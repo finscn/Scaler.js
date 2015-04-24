@@ -6,3 +6,7 @@ Scaler.js is published under the [MIT Open Source License](http://opensource.org
 --------------
 
 Example: <http://fattyboy.cn/scaler/>
+
+--------------
+
+The source & example are the best Documents ;P

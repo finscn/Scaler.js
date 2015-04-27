@@ -224,20 +224,22 @@ Scaler.prototype.resizeCanvas = function(canvas, useTransform) {
     canvas.width = this.fullWidth;
     canvas.height = this.fullHeight;
     if (useTransform) {
-        canvas.style.width = this.fullWidth + "px";
-        canvas.style.height = this.fullHeight + "px";
-        canvas.style.transformOrigin = "0 0";
-        canvas.style.transform = "scale(" + this.scaleX + "," + this.scaleY + ")";
+        this.resizeDom(canvas);
     } else {
         canvas.style.width = this.screenWidth + "px";
         canvas.style.height = this.screenHeight + "px";
     }
 };
 
-// 缩放普通dom元素, 其实这个意义不大.
+// 利用 CSS Transform 缩放dom元素, 其实这个意义不大.
 Scaler.prototype.resizeDom = function(dom) {
     dom.style.width = this.fullWidth + "px";
     dom.style.height = this.fullHeight + "px";
-    dom.style.transformOrigin = "0 0";
-    dom.style.transform = "scale(" + this.scaleX + "," + this.scaleY + ")";
+    if ("transform" in dom.style){
+        dom.style.transformOrigin = "0 0";
+        dom.style.transform = "scale(" + this.scaleX + "," + this.scaleY + ")";
+    }else if ("webkitTransform" in dom.style){
+        dom.style.webkitTransformOrigin = "0 0";
+        dom.style.webkitTransform = "scale(" + this.scaleX + "," + this.scaleY + ")";
+    }
 };

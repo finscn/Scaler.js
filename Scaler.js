@@ -134,6 +134,7 @@ Scaler.prototype = {
         this.scaledWidth = this.width * this.scaleX;
         this.fullWidth = Math.ceil(this.screenWidth / this.scaleX);
         this.offsetX = (this.fullWidth - this.width) >> 1;
+        this.scaledOffsetX = (this.screenWidth - this.scaledWidth) >> 1;
     },
     setScaleY: function(scaleY) {
         this.scale = null;
@@ -141,6 +142,7 @@ Scaler.prototype = {
         this.scaledHeight = this.height * this.scaleY;
         this.fullHeight = Math.ceil(this.screenHeight / this.scaleY);
         this.offsetY = (this.fullHeight - this.height) >> 1;
+        this.scaledOffsetY = (this.screenHeight - this.scaledHeight) >> 1;
     },
 
 
@@ -155,6 +157,8 @@ Scaler.prototype = {
         this.fullHeight = this.screenHeight;
         this.offsetX = (this.fullWidth - this.width) >> 1;
         this.offsetY = (this.fullHeight - this.height) >> 1;
+        this.scaledOffsetX = this.offsetX;
+        this.scaledOffsetY = this.offsetY;
     },
     doWidthFit: function() {
         var scale = this.screenWidth / this.width;
@@ -168,6 +172,8 @@ Scaler.prototype = {
         this.fullHeight = Math.ceil(this.screenHeight / this.scaleY);
         this.offsetX = 0;
         this.offsetY = (this.fullHeight - this.height) >> 1;
+        this.scaledOffsetX = 0;
+        this.scaledOffsetY = (this.screenHeight - this.scaledHeight) >> 1;
     },
     doHeightFit: function() {
         var scale = this.screenHeight / this.height;
@@ -181,6 +187,8 @@ Scaler.prototype = {
         this.fullHeight = this.height;
         this.offsetX = (this.fullWidth - this.width) >> 1;
         this.offsetY = 0;
+        this.scaledOffsetX = (this.screenWidth - this.scaledWidth) >> 1;
+        this.scaledOffsetY = 0;
     },
     doScaleFit: function() {
         this.scaleX = this.screenWidth / this.width;
@@ -192,6 +200,8 @@ Scaler.prototype = {
         this.fullHeight = Math.ceil(this.screenHeight / this.scaleY);
         this.offsetX = 0;
         this.offsetY = 0;
+        this.scaledOffsetX = 0;
+        this.scaledOffsetY = 0;
     },
     doAspectFill: function() {
         var designR = this.width / this.height;
@@ -235,10 +245,10 @@ Scaler.prototype.resizeCanvas = function(canvas, useTransform) {
 Scaler.prototype.resizeDom = function(dom) {
     dom.style.width = this.fullWidth + "px";
     dom.style.height = this.fullHeight + "px";
-    if ("transform" in dom.style){
+    if ("transform" in dom.style) {
         dom.style.transformOrigin = "0 0";
         dom.style.transform = "scale(" + this.scaleX + "," + this.scaleY + ")";
-    }else if ("webkitTransform" in dom.style){
+    } else if ("webkitTransform" in dom.style) {
         dom.style.webkitTransformOrigin = "0 0";
         dom.style.webkitTransform = "scale(" + this.scaleX + "," + this.scaleY + ")";
     }

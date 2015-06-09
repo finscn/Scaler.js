@@ -170,9 +170,9 @@ Scaler.prototype = {
             scale = 1;
         }
         this.scaleX = this.scaleY = this.scale = scale;
-        this.scaledWidth = this.screenWidth;
+        this.scaledWidth = this.width * this.scaleX; // this.screenWidth;
         this.scaledHeight = this.height * this.scaleY;
-        this.fullWidth = this.width;
+        this.fullWidth = Math.ceil(this.screenWidth / this.scaleX); // this.width;
         this.fullHeight = Math.ceil(this.screenHeight / this.scaleY);
         this.offsetX = 0;
         this.offsetY = (this.fullHeight - this.height) >> 1;
@@ -187,9 +187,10 @@ Scaler.prototype = {
         }
         this.scaleX = this.scaleY = this.scale = scale;
         this.scaledWidth = this.width * this.scaleX;
-        this.scaledHeight = this.screenHeight;
+        this.scaledHeight = this.height * this.scaleY; // this.screenHeight ;
         this.fullWidth = Math.ceil(this.screenWidth / this.scaleX);
-        this.fullHeight = this.height;
+        this.fullHeight = Math.ceil(this.screenHeight / this.scaleY); // this.height;
+
         this.offsetX = (this.fullWidth - this.width) >> 1;
         this.offsetY = 0;
         this.scaledOffsetX = (this.screenWidth - this.scaledWidth) >> 1;

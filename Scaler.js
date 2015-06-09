@@ -71,6 +71,8 @@ Scaler.prototype = {
     scale: null,
     scaleX: null,
     scaleY: null,
+    minScale: 0,
+    maxScale: Infinity,
 
     init: function() {
         this.screenWidth = this.screenWidth || this.width;
@@ -121,6 +123,7 @@ Scaler.prototype = {
     ////  以下 3个 setter 方法通常不需要使用  ////
     ///////////////////////////////////////////
     setScale: function(scale) {
+        scale = Math.min(this.maxScale, Math.max(this.minScale, scale));
         if (Math.abs(scale - 1) <= this.scaleThreshold) {
             scale = 1;
         }
@@ -162,6 +165,7 @@ Scaler.prototype = {
     },
     doWidthFit: function() {
         var scale = this.screenWidth / this.width;
+        scale = Math.min(this.maxScale, Math.max(this.minScale, scale));
         if (Math.abs(scale - 1) <= this.scaleThreshold) {
             scale = 1;
         }
@@ -177,6 +181,7 @@ Scaler.prototype = {
     },
     doHeightFit: function() {
         var scale = this.screenHeight / this.height;
+        scale = Math.min(this.maxScale, Math.max(this.minScale, scale));
         if (Math.abs(scale - 1) <= this.scaleThreshold) {
             scale = 1;
         }
@@ -191,8 +196,8 @@ Scaler.prototype = {
         this.scaledOffsetY = 0;
     },
     doScaleFit: function() {
-        this.scaleX = this.screenWidth / this.width;
-        this.scaleY = this.screenHeight / this.height;
+        this.scaleX = Math.min(this.maxScale, Math.max(this.minScale, this.screenWidth / this.width));
+        this.scaleY = Math.min(this.maxScale, Math.max(this.minScale, this.screenHeight / this.height));
         this.scale = null;
         this.scaledWidth = this.width * this.scaleX;
         this.scaledHeight = this.height * this.scaleY;
